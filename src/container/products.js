@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import FetchData from '../logic/fetchData';
+import { FetchProds } from '../logic/apiData';
 import DataContext from '../DataContext';
 
 export default class Products extends Component {
@@ -17,7 +17,7 @@ export default class Products extends Component {
     getProd = async() =>{
         const info = this.context;
         let products =[];
-        const data = await FetchData(info.category);
+        const data = await FetchProds(info.category);
         products = await data.data.category.products;
         this.setState({products});
     }
@@ -45,14 +45,14 @@ export default class Products extends Component {
                             <h1>products</h1>  
                             <div style={{ display:'flex', flexWrap:'wrap'}}>
                             {prod_list.map((prod) => (
-                                <div>
+                                <div key={prod.id}>
                                     <div><img src={prod.gallery[0]} style={{ width:'auto', height:'300px'}}></img></div>
                                     <ul>                      
                                     <li>id : {prod.id}</li>
                                     <li>Name: {prod.name}</li>
                                     <li>Category: {prod.category}</li>
-                                    <li>{ prod.prices.find(element => element.currency.label == this.context.symLabel ).amount}
-                                    { prod.prices.find(element => element.currency.label == this.context.symLabel ).currency.symbol}</li>                      
+                                    <li>{ prod.prices.find(element => element.currency.label == this.context.currencyLabel ).amount}
+                                    { prod.prices.find(element => element.currency.label == this.context.currencyLabel ).currency.symbol}</li>                      
                                     </ul>
                                 </div>                  
                         ))}

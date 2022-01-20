@@ -1,6 +1,8 @@
 // import { useQuery } from "react-query";
 
-const FetchData = async(cat) => { 
+const ENDPOINT="http://localhost:4000/";
+
+const FetchProds = async(cat) => { 
   
   const PROD_LIST_QUERY=`
     query qry($cat: String!){
@@ -32,10 +34,10 @@ const FetchData = async(cat) => {
     }
     
     `;
-    const endpoint="http://localhost:4000/";    
+        
     try{
 
-      const res = await fetch(endpoint, {
+      const res = await fetch(ENDPOINT, {
             method:"POST",
             headers: { "Content-Type":"application/json"},
             body: JSON.stringify({query: PROD_LIST_QUERY, variables: { cat }  })
@@ -51,4 +53,30 @@ const FetchData = async(cat) => {
     
 }
 
-export default FetchData;
+const FetchCurrencies = async() => { 
+
+  const CURRENCY_LIST=`{
+    currencies{
+      symbol
+      label
+    }
+  }`;
+
+  try{
+
+    const res = await fetch(ENDPOINT, {
+          method:"POST",
+          headers: { "Content-Type":"application/json"},
+          body: JSON.stringify({ query: CURRENCY_LIST })
+      });
+      
+    const data = await res.json();
+  
+  return data;
+
+  }catch(err){
+    console.error(err);
+  }
+}
+
+export  { FetchProds, FetchCurrencies };
