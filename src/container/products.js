@@ -46,14 +46,13 @@ export default class Products extends Component {
                             <div style={{ display:'flex', flexWrap:'wrap'}}>
                             {prod_list.map((prod) => (
                                 <div>
-                                    <div>{this.context.category}</div>
                                     <div><img src={prod.gallery[0]} style={{ width:'auto', height:'300px'}}></img></div>
                                     <ul>                      
                                     <li>id : {prod.id}</li>
                                     <li>Name: {prod.name}</li>
                                     <li>Category: {prod.category}</li>
-                                    <li>{ prod.prices.find(element => element.currency.label == "USD" ).amount}
-                                    { prod.prices.find(element => element.currency.label == "USD" ).currency.symbol}</li>                      
+                                    <li>{ prod.prices.find(element => element.currency.label == this.context.symLabel ).amount}
+                                    { prod.prices.find(element => element.currency.label == this.context.symLabel ).currency.symbol}</li>                      
                                     </ul>
                                 </div>                  
                         ))}

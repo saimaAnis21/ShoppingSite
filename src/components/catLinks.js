@@ -11,9 +11,8 @@ export default class CatLinks extends Component {
                     context => (
                         <Fragment>
                             <div style={{display:'flex', justifyContent:'space-around', width:'25%'}}>
-                            <p>{context.category}</p>
-                            <button>All</button>
-                            <button>Clothes</button>
+                            <button onClick={() => context.changecategory('all')}>All</button>
+                            <button onClick={() => context.changecategory('clothes')}>Clothes</button>
                             <button onClick={() => context.changecategory('tech')}>Tech</button>
                             </div>
                         </Fragment>

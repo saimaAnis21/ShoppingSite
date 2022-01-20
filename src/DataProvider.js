@@ -5,7 +5,8 @@ import React, { Component } from 'react'
 export default class DataProvider extends Component {
 
     state = {
-        category:'all'
+        category:'all',
+        symLabel:'USD'
     };
 
     render() {
@@ -13,6 +14,7 @@ export default class DataProvider extends Component {
             <DataContext.Provider
                 value={{
                     category: this.state.category,
+                    symLabel: this.state.symLabel,
                     changecategory: (cat) => {
                         let category = Object.assign({}, this.state.category);  
                         category = cat                      

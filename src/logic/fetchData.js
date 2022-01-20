@@ -3,9 +3,9 @@
 const FetchData = async(cat) => { 
   
   const PROD_LIST_QUERY=`
-    query qry($x: String!){
+    query qry($cat: String!){
       category(input: {
-        title:$x
+        title:$cat
       }){    
         products{
           id
@@ -38,7 +38,7 @@ const FetchData = async(cat) => {
       const res = await fetch(endpoint, {
             method:"POST",
             headers: { "Content-Type":"application/json"},
-            body: JSON.stringify({query: PROD_LIST_QUERY, variables: { x:cat }  })
+            body: JSON.stringify({query: PROD_LIST_QUERY, variables: { cat }  })
         });
         
       const data = await res.json();
