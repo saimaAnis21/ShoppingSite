@@ -6,7 +6,8 @@ export default class DataProvider extends Component {
 
     state = {
         category:'all',
-        currencyLabel:''
+        currencyLabel:'',
+        productsList:[]
     };
 
     render() {
@@ -15,11 +16,19 @@ export default class DataProvider extends Component {
                 value={{
                     category: this.state.category,
                     currencyLabel: this.state.currencyLabel,
+                    productsList: this.productsList,
                     changecategory: (cat) => {
                         let category = Object.assign({}, this.state.category);  
-                        category = cat                      
+                        category = cat ;                     
                         this.setState({
                             category
+                        });
+                    },
+                    populateProdList: (list) => {
+                        let productsList = Object.assign({}, this.state.productsList);  
+                        productsList = list.map( (el) => el );                      
+                        this.setState({
+                            productsList
                         });
                     }
                     

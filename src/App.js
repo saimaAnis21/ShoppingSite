@@ -4,7 +4,7 @@ import Products from './container/products';
 import DataProvider from './DataProvider';
 
 export default class App extends Component {
-  
+
   render() {
     return (
       <DataProvider>
