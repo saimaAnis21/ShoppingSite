@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { FetchProds } from '../logic/apiData';
 import DataContext from '../DataContext';
 
@@ -58,6 +59,9 @@ export default class Products extends Component {
                     <ul style={{ listStyle:'none'}}>                      
                     <li>{prod.name}</li>
                     <li>{prod.prices.find( (x) => x.currency.label == this.context.currencyLabel).amount}</li>                      
+                    <li>
+                    <Link to="/Product">Click</Link>
+                    </li>
                     </ul>
                     </div>             
                 ))}
