@@ -26,8 +26,8 @@ export default class CurrencySelect extends Component {
   }
 
   changeCurrencyLabel = (label) => {
-    this.context.currencyLabel = label;
-    console.log(this.context.currencyLabel);
+    this.context.changecurrencyLabel(label);
+    
   }
 
   render() {

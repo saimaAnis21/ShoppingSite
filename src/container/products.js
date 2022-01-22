@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { FetchProds } from '../logic/apiData';
 import DataContext from '../DataContext';
-// import ProdCurrency from '../components/prodCurrency';
 
 export default class Products extends Component {
 
@@ -12,16 +11,17 @@ export default class Products extends Component {
           
         this.state = {
           products:[], 
-                
+          priceLabel:"",                
         };
       
     }   
     getProd = async() =>{
         this._isMount = true;        
         let products =[];
+        const priceLabel = this.context.currencyLabel;
         const data = await FetchProds();
         products = await data.data.category.products;
-        this.setState({products});
+        this.setState({products, priceLabel});
         
     }
 
@@ -33,14 +33,15 @@ export default class Products extends Component {
         
     }
    
-    // componentDidUpdate(){     
-    //     console.log(this.state.products);
-    // }
+    componentDidUpdate(){     
+        console.log("updated");
+    }
      
 
     render() {       
         let prod_list = [];
-        let priceLabel = this.context.currencyLabel;
+        console.log(this.context.category);
+        console.log(this.context.currencyLabel);
         if(this._isMounted){
             if (this.context.category == 'all' || this.context.category == "") {
                 prod_list = this.state.products;
@@ -52,13 +53,11 @@ export default class Products extends Component {
                 <h1>products</h1>  
                 <div style={{ display:'flex', flexWrap:'wrap'}}>
                 {prod_list.map((prod) => (                            
-                    <div key={prod.id}>
-                    <div><img src={prod.gallery[0]} style={{ width:'auto', height:'300px'}}></img></div>
-                    <ul>                      
-                    <li>id : {prod.id}</li>
-                    <li>Name: {prod.name}</li>
-                    <li>Category: {prod.category}</li>
-                    <li></li>                      
+                    <div key={prod.id} >
+                    <div style={{textAlign:'center'}}><img src={prod.gallery[0]} style={{ width:'auto', height:'100px'}}></img></div>
+                    <ul style={{ listStyle:'none'}}>                      
+                    <li>{prod.name}</li>
+                    <li>{prod.prices.find( (x) => x.currency.label == this.context.currencyLabel).amount}</li>                      
                     </ul>
                     </div>             
                 ))}
@@ -66,7 +65,7 @@ export default class Products extends Component {
                 </div>
             );
         }else{
-            return(<div>nothing here</div>);
+            return(<div></div>);
           
         }
     }
