@@ -60,7 +60,8 @@ export default class Products extends Component {
                     <li>{prod.name}</li>
                     <li>{prod.prices.find( (x) => x.currency.label == this.context.currencyLabel).amount}</li>                      
                     <li>
-                    <Link to="/Product">Click</Link>
+                    {/* <Link to={`/product/${prod.id}`}>Click</Link> */}
+                    <Link to={`/product/${prod.id}`}>Click</Link>
                     </li>
                     </ul>
                     </div>             

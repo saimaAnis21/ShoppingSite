@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import NavBar from './container/navBar';
 import Products from './container/products';
 import DataProvider from './DataProvider';
@@ -9,15 +9,17 @@ export default class App extends Component {
 
   render() {
     return (
+      <BrowserRouter>
       <DataProvider>
         <div>
-          <Routes>
-            <Route exact path="/Product" component={ProdDesc}/>
-          </Routes>
-          <NavBar />
-          <Products />
+        <NavBar />  
+            <Routes>
+              <Route exact path="/" element={<Products />} />
+              <Route exact path="/product/:data" element={<ProdDesc/>} />            
+            </Routes>                  
         </div>
       </DataProvider>
+      </BrowserRouter>      
     )
   }
 }
