@@ -34,37 +34,30 @@ export default class Products extends Component {
         
     }
    
-    componentDidUpdate(){     
-        console.log("updated");
-    }
-     
 
     render() {       
-        let prod_list = [];
-        console.log(this.context.category);
-        console.log(this.context.currencyLabel);
+        let prod_list = [];        
         if(this._isMounted){
             if (this.context.category == 'all' || this.context.category == "") {
                 prod_list = this.state.products;
             }else{
                 prod_list = this.state.products.filter( prod => prod.category == this.context.category);
-                }
+                }                
             return (        
                 <div>
-                <h1>products</h1>  
+                <h1>{this.context.category}</h1>  
                 <div style={{ display:'flex', flexWrap:'wrap'}}>
-                {prod_list.map((prod) => (                            
-                    <div key={prod.id} >
-                    <div style={{textAlign:'center'}}><img src={prod.gallery[0]} style={{ width:'auto', height:'100px'}}></img></div>
-                    <ul style={{ listStyle:'none'}}>                      
-                    <li>{prod.name}</li>
-                    <li>{prod.prices.find( (x) => x.currency.label == this.context.currencyLabel).amount}</li>                      
-                    <li>
-                    {/* <Link to={`/product/${prod.id}`}>Click</Link> */}
-                    <Link to={`/product/${prod.id}`}>Click</Link>
-                    </li>
-                    </ul>
-                    </div>             
+                {prod_list.map((prod) => (
+                        
+                    <Link to={`/product/${prod.id}`}>   
+                        <div key={prod.id} >
+                            <div style={{textAlign:'center'}}><img src={prod.gallery[0]} style={{ width:'auto', height:'100px'}}></img></div>
+                            <ul style={{ listStyle:'none'}}>                      
+                            <li>{prod.name}</li>
+                            <li>{ `${prod.prices.find( (x) => x.currency.symbol == this.context.currencyLabel).amount} ${this.context.currencyLabel} `}</li>                      
+                            </ul>
+                        </div>     
+                    </Link>         
                 ))}
                 </div>
                 </div>

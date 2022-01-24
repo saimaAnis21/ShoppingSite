@@ -19,27 +19,27 @@ export default class CurrencySelect extends Component {
           this.setState({
             currencySymbols: x.data.currencies
           });
-          this.context.currencyLabel = this.state.currencySymbols[0].label
+          this.context.currencyLabel = this.state.currencySymbols[0].symbol;
           
         })();            
       
   }
 
-  changeCurrencyLabel = (label) => {
-    this.context.changecurrencyLabel(label);
+  changeCurrencyLabel = (symbol) => {
+    this.context.changecurrencyLabel(symbol);
     
   }
 
   render() {
     const selectSymbols = this.state.currencySymbols;
     return <div style={{ float:'right', width:'10%'}}>
-       <select onChange={(e) => this.changeCurrencyLabel(e.target.value)}>
+       <select onChange={(e) => this.changeCurrencyLabel(e.target.value)} style={{ width:'40%'}}>
         {selectSymbols.map((opt) => (
           <option
             key={opt.label}
-            value={opt.label}
+            value={opt.symbol}
           >
-            {opt.symbol}
+            {`${opt.symbol} ${opt.label}`}
           </option>
         ))}
         ;

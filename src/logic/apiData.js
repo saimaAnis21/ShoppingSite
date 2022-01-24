@@ -18,14 +18,6 @@ const FetchProds = async() => {
         }
         amount
       }
-      attributes{
-        name
-        type
-        items{
-          value
-          displayValue
-        }
-      }
       gallery
     }
   }
