@@ -1,29 +1,56 @@
-const ALL_PRODUCTS=`{
-  category(input: {
-    title:"all"
-  }){    
-    products{
+const PROD_LIST_QUERY=`{
+  category{
+  name
+  products{
+    name
+    id
+    category
+    prices{
+      currency{
+        label
+        symbol
+      }
+      amount
+    }
+    gallery
+  }
+}
+
+}`;   
+
+const CURRENCY_LIST=`{
+  currencies{
+    symbol
+    label
+  }
+}`;
+
+const PROD_DESC=`{
+  product(id: "ps-5") {
+   name
+    brand
+    id
+    description
+    prices{
+      currency{
+        label
+        symbol
+      }
+      amount
+    }
+    attributes{
       id
       name
-      category
-      prices{
-        currency{
-          label
-          symbol
-        }
-        amount
+      items{
+        id
+        value
+        displayValue
       }
-      attributes{
-        name
-        type
-        items{
-          value
-          displayValue
-        }
-      }
-      gallery
     }
+    gallery
   }
-  }`;
+}`;
 
-    export default ALL_PRODUCTS;
+
+
+export { PROD_LIST_QUERY, CURRENCY_LIST, PROD_DESC};
