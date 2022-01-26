@@ -29,10 +29,11 @@ class ProdDesc extends Component {
 
  
   render() {
-    console.log(this.state.prodData);
+    const { prodData } = this.state;
+    console.log(prodData);
     return(
-      <div>
-        <p> prod desc pg </p>
+      <div style={{ border:'5px solid red'}}>
+        hello
       </div>
     ); 
   }

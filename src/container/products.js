@@ -47,7 +47,7 @@ export default class Products extends Component {
             return (        
                 <div>
                 <h1>{this.context.category}</h1>  
-                <div style={{ display:'flex', flexWrap:'wrap'}}>
+                <div style={{ display:'flex', flexWrap:'wrap', border:'5px solid blue'}}>
                 {prod_list.map((prod) => (
                         
                     <Link to={`/product/${prod.id}`}>   

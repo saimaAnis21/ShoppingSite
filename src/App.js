@@ -11,7 +11,7 @@ export default class App extends Component {
     return (
       <BrowserRouter>
       <DataProvider>
-        <div>
+        <div style={{ border:'5px solid yellow', position:'absolute', width:'1440 px', height:'1513 px', left:'0px', top:'0 px', backgroundColor:'#FFFFFF'}}>
         <NavBar />  
             <Routes>
               <Route exact path="/" element={<Products />} />
