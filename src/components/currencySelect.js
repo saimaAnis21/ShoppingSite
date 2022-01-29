@@ -33,8 +33,8 @@ export default class CurrencySelect extends Component {
 
   render() {
     const selectSymbols = this.state.currencySymbols;
-    return <div style={{ width:'10%'}}>
-       <select onChange={(e) => this.changeCurrencyLabel(e.target.value)} style={{ width:'40%'}}>
+    return <div style={{ border:'5px solid purple' }}>
+       <select onChange={(e) => this.changeCurrencyLabel(e.target.value)} >
         {selectSymbols.map((opt) => (
           <option
             key={opt.label}
