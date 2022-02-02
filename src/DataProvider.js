@@ -7,7 +7,8 @@ export default class DataProvider extends Component {
     state = {
         category:'all',
         currencyLabel: '$',
-        
+        cart: [],
+        cartItemCtr:0,
     };
 
     render() {
@@ -16,6 +17,8 @@ export default class DataProvider extends Component {
                 value={{
                     category: this.state.category,
                     currencyLabel: this.state.currencyLabel,
+                    cart: this.state.cart,
+                    cartItemCtr: this.state.cartItemCtr,
                     changecategory: (cat) => {
                         let category = Object.assign({}, this.state.category); 
                         category = cat ;                     
@@ -29,6 +32,21 @@ export default class DataProvider extends Component {
                         currencyLabel = symbol;                     
                         this.setState({
                             currencyLabel,
+                        });
+                    },
+                    addToCart: (item) => {                        
+                        let cart = this.state.cart; 
+                        let cartItemCtr = this.state.cartItemCtr;
+                        item = {
+                            id: cartItemCtr,
+                            ...item,
+                        }
+                        cart.push(item);  
+                        console.log(cart);                      
+                        cartItemCtr += 1;                  
+                        this.setState({
+                            cart,
+                            cartItemCtr
                         });
                     },
                     

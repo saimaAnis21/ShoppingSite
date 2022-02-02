@@ -13,6 +13,7 @@ class ProdDesc extends Component {
     this.state = {
       prodData:{},
       bigImgSrc:'',
+      cartItem:{}
     }
   }
 
@@ -20,9 +21,27 @@ class ProdDesc extends Component {
     let prodData = await fetchProdDesc(id);
     prodData = await prodData.data.product;
     const bigImgSrc = prodData.gallery[0];
+    const { name, brand, prices } = prodData;
+    const att = {};
+    if( prodData.attributes.length > 0){
+      
+      prodData.attributes.forEach(element => {
+        att[element.name] = element.items[0].value;
+      });
+      
+    }
+      
+    
+   const cartItem ={
+     brand,
+     name,
+     prices,
+     ...att,
+   }
     this.setState({
       prodData,
-      bigImgSrc
+      bigImgSrc,   
+      cartItem   
     });   
     
 } 
@@ -35,13 +54,33 @@ class ProdDesc extends Component {
           })(); 
   }
 
- 
- 
+  addAttributes = (e) => {
+   const obj={};   
+   obj[e.target.name]= e.target.value;
+   this.setState({
+    cartItem:{      
+      ...this.state.cartItem,
+      ...obj,      
+    }
+   })
+    
+  }
+  
   render() {
-    const { prodData, bigImgSrc } = this.state; 
-    let items = [];   
+    const { prodData, bigImgSrc } = this.state;
+    const attStyle ={
+      marginRight:'10px',
+      textAlign:'center',
+      display:'inline-block',
+      border:'2px solid black'
+    };
+    const brandnameStyle={
+      fontSize:'30px',
+      color:'#1D1F22'
+    }
+        
     if(this._isMounted){
-      console.log(prodData.attributes);
+      
       return(
         <div style={{ border:'5px solid red', marginTop:'100px', display:'flex'}}>
           <div style={{ display:'flex', flexDirection:'column'}}>{ prodData.gallery.map( (pic) => (
@@ -49,15 +88,21 @@ class ProdDesc extends Component {
           ))}</div>
           <div><img src={bigImgSrc} style={{ width:'auto', height:'600px'}}></img></div>
           <div>
-            <div style={{ fontWeight:'600', fontSize:'30px', color:'#1D1F22'}}>{prodData.brand}</div>
-            <div style={{ fontWeight:'normal', fontSize:'30px', color:'#1D1F22'}}>{prodData.name}</div>
+            <div style={ {fontWeight:'600', ...brandnameStyle } }>{prodData.brand}</div>
+            <div style={{ fontWeight:'normal', ...brandnameStyle }}>{prodData.name}</div>
             <div>{ prodData.attributes.length > 0 ? prodData.attributes.map((att) => (
               <>
               <p>{att.name}</p>
-               { att.name == "Color" ? att.items.map( item => <div style={{ color:`${item.value}`, backgroundColor:`${item.value}`, marginRight:'10px', textAlign:'center', display:'inline-block', border:'2px solid black'}}>{item.id}</div>) : att.items.map( item => <div style={{ marginRight:'10px', textAlign:'center', display:'inline-block', border:'2px solid black'}}>{item.id}</div>) }
-              </>)) : "no"} </div>
+              <div onChange={(e) => this.addAttributes(e)}>
+               { att.name == "Color" ? att.items.map( item => 
+              <div style={{ color:`${item.value}`, backgroundColor:`${item.value}`, ...attStyle}}> <input type="radio" checked={this.state.cartItem[att.name]=== item.value} value={item.value} name={att.name} />{item.displayValue}</div>) : att.items.map( item => <div style={ attStyle }><input type="radio" checked={this.state.cartItem[att.name]=== item.value} value={item.value} name={att.name} />{item.displayValue}</div> ) }
+              </div>
+              </>)) : <p></p>}
+              
+           </div>
             <div style={{ fontWeight:'bold', fontSize:'18px', color:'#1D1F22', textTransform:'uppercase'}}>price:</div>
             <div>{ `${prodData.prices.find( (x) => x.currency.symbol == this.context.currencyLabel).amount} ${this.context.currencyLabel} `}</div>
+            <button onClick={() => this.context.addToCart(this.state.cartItem)} style={{ textTransform:'uppercase', backgroundColor:'#5ECE7B', border:'2px solid #5ECE7B' }}>Add to cart</button>
             <div><Markup content={prodData.description} /></div>
           </div>
         </div>
