@@ -4,6 +4,7 @@ import NavBar from './container/navBar';
 import Products from './container/products';
 import DataProvider from './DataProvider';
 import ProdDesc from './components/prodDesc';
+import Cart from './components/cart';
 
 export default class App extends Component {
 
@@ -15,7 +16,8 @@ export default class App extends Component {
         <NavBar />  
             <Routes>
               <Route exact path="/" element={<Products />} />
-              <Route exact path="/product/:data" element={<ProdDesc/>} />            
+              <Route exact path="/product/:data" element={<ProdDesc/>} />  
+              <Route exact path="/cart" element={<Cart/>} />            
             </Routes>                  
         </div>
       </DataProvider>

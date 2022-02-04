@@ -1,6 +1,6 @@
 import DataContext from "./DataContext";
-
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { isEqual } from "lodash";
 
 export default class DataProvider extends Component {
 
@@ -37,12 +37,9 @@ export default class DataProvider extends Component {
                     addToCart: (item) => {                        
                         let cart = this.state.cart; 
                         let cartItemCtr = this.state.cartItemCtr;
-                        item = {
-                            id: cartItemCtr,
-                            ...item,
-                        }
+                        // let index = cart.findIndex((x) => JSON.stringify(x) === JSON.stringify(item));
                         cart.push(item);  
-                        console.log(cart);                      
+                        console.log(cart);
                         cartItemCtr += 1;                  
                         this.setState({
                             cart,
