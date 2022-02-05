@@ -36,10 +36,9 @@ class ProdDesc extends Component {
      brand,
      name,
      prices,
-     attributes:{
-      ...att,
-     },
+     att,
    }
+   console.log(cartItem);
     this.setState({
       prodData,
       bigImgSrc,   
@@ -57,17 +56,22 @@ class ProdDesc extends Component {
   }
 
   addAttributes = (e) => {
-   const obj={};   
-   obj[e.target.name]= e.target.value;
+   let obj={};   
+   let att = this.state.cartItem.att; 
+   
+   obj[e.target.name]= e.target.value;   
+   att={
+     ...att,
+     ...obj,
+   };
+   
    this.setState({
     cartItem:{      
       ...this.state.cartItem,
-      attributes:{
-        ...obj,
-      },      
+        att,           
     }
    })
-    
+   console.log(this.state.cartItem);
   }
   
   render() {
@@ -107,7 +111,7 @@ class ProdDesc extends Component {
               <p>{att.name}</p>
               <div onChange={(e) => this.addAttributes(e)}>
                { att.name == "Color" ? att.items.map( item => 
-                <div style={{ color:`${item.value}`, backgroundColor:`${item.value}`, ...attStyle}}> <input type="radio" checked={this.state.cartItem[att.name]=== item.value} value={item.value} name={att.name} />{item.displayValue}</div>) : att.items.map( item => <div style={ attStyle }><input type="radio" checked={this.state.cartItem[att.name]=== item.value} value={item.value} name={att.name} />{item.displayValue}</div> ) }
+                <div style={{ color:`${item.value}`, backgroundColor:`${item.value}`, ...attStyle}}> <input type="radio" checked={this.state.cartItem.att[att.name]=== item.value} value={item.value} name={att.name} />{item.displayValue}</div>) : att.items.map( item => <div style={ attStyle }><input type="radio" checked={this.state.cartItem.att[att.name]=== item.value} value={item.value} name={att.name} />{item.displayValue}</div> ) }
                 </div>
               </>)) : <p></p>}              
             </div>
