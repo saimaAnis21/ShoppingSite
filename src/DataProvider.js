@@ -7,7 +7,7 @@ export default class DataProvider extends Component {
     state = {
         category:'all',
         currencyLabel: '$',
-        cart: [],
+        cart: {},
         cartItemCtr:0,
     };
 
@@ -37,10 +37,21 @@ export default class DataProvider extends Component {
                     addToCart: (item) => {                        
                         let cart = this.state.cart; 
                         let cartItemCtr = this.state.cartItemCtr;
-                        // let index = cart.findIndex((x) => JSON.stringify(x) === JSON.stringify(item));
-                        cart.push(item);  
+                        let index = Object.values(cart).map((x) => x.item).findIndex((x) => JSON.stringify(x) === JSON.stringify(item));
+                        console.log(index);
                         console.log(cart);
-                        cartItemCtr += 1;                  
+                        if(index > -1){
+                            let qty = cart[index].quantity;
+                            let item = cart[index].item;
+                            cart[index].quantity+=1;
+                        }else{
+                            cart[cartItemCtr]={
+                                item,   
+                                quantity:1                         
+                            }
+                            cartItemCtr += 1; 
+                        }                       
+                                         
                         this.setState({
                             cart,
                             cartItemCtr

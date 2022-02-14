@@ -21,7 +21,7 @@ const fetchData = async (qry) => {
 }
 
 const fetchProdDesc = async (id) => {
-  console.log(id)
+  
   const PROD_DESC=`
   query qry($prodID:String!){
     product(id: $prodID) {

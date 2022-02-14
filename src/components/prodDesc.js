@@ -36,9 +36,10 @@ class ProdDesc extends Component {
      brand,
      name,
      prices,
+     bigImgSrc,
      att,
    }
-   console.log(cartItem);
+   
     this.setState({
       prodData,
       bigImgSrc,   
@@ -71,7 +72,7 @@ class ProdDesc extends Component {
         att,           
     }
    })
-   console.log(this.state.cartItem);
+   
   }
   
   render() {
