@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import DataContext from '../DataContext';
+import { FaMinus, FaPlus } from "react-icons/fa";
 
 export default class Cart extends Component {
     static contextType = DataContext;
@@ -30,10 +31,15 @@ export default class Cart extends Component {
                         </div>
                       ))}
                     </div>
-                    <div>
-                      <img style={{ width:'100px', height:'auto'}} src={element.item.bigImgSrc}></img>
-                    </div>
-                    <div>{element.quantity}</div>
+                                       
+                    <div style={{ display:'flex', alignItems:'center'}}>
+                      <div style={{ display:'flex', flexDirection:'column', justifyContent:'space-between'}}>
+                        <FaPlus onClick={() => console.log("add")} />
+                        <div style={{ marginTop:'15px', marginBottom:'15px'}}>{element.quantity}</div>
+                        <FaMinus onClick={() => console.log("remove")} />
+                      </div>
+                      <div><img style={{ width:'100px', height:'auto'}} src={element.item.bigImgSrc}></img></div>
+                    </div>                    
                   </div>
             ))}
         </div>
