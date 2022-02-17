@@ -8,8 +8,7 @@ export default class Cart extends Component {
     
   render() {     
     const cart = Object.values(this.context.cart);
-      
-      const brandStyle={
+    const brandStyle={
         fontSize:'30px', 
         lineHeight:'27px',
       };
@@ -34,9 +33,9 @@ export default class Cart extends Component {
                                        
                     <div style={{ display:'flex', alignItems:'center'}}>
                       <div style={{ display:'flex', flexDirection:'column', justifyContent:'space-between'}}>
-                        <FaPlus onClick={() => console.log("add")} />
+                        <FaPlus onClick={() => this.context.incQuantity(element.item)} />
                         <div style={{ marginTop:'15px', marginBottom:'15px'}}>{element.quantity}</div>
-                        <FaMinus onClick={() => console.log("remove")} />
+                        <FaMinus onClick={() => this.context.decQuantity(element.item)} />
                       </div>
                       <div><img style={{ width:'100px', height:'auto'}} src={element.item.bigImgSrc}></img></div>
                     </div>                    

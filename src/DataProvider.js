@@ -11,6 +11,11 @@ export default class DataProvider extends Component {
         cartItemCtr:0,
     };
 
+    findIndex = (item) => {
+        let cart = this.state.cart; 
+        return Object.keys(cart).find( key => JSON.stringify(cart[key].item) == JSON.stringify(item));
+    }
+
     render() {
         return (
             <DataContext.Provider
@@ -33,28 +38,58 @@ export default class DataProvider extends Component {
                         this.setState({
                             currencyLabel,
                         });
-                    },
+                    },                    
                     addToCart: (item) => {                        
                         let cart = this.state.cart; 
                         let cartItemCtr = this.state.cartItemCtr;
-                        let index = Object.values(cart).map((x) => x.item).findIndex((x) => JSON.stringify(x) === JSON.stringify(item));
-                        console.log(index);
-                        console.log(cart);
-                        if(index > -1){
-                            let qty = cart[index].quantity;
-                            let item = cart[index].item;
-                            cart[index].quantity+=1;
-                        }else{
+                        let index = this.findIndex(item);
+                        console.log(index); 
+                        if(index === undefined){
                             cart[cartItemCtr]={
                                 item,   
                                 quantity:1                         
                             }
                             cartItemCtr += 1; 
+                            
+                        }else{
+                            cart[index].quantity+=1;
                         }                       
                                          
                         this.setState({
                             cart,
                             cartItemCtr
+                        });
+                         
+                    },
+
+                    incQuantity: (item) => {                        
+                        let cart = this.state.cart; 
+                        let index = this.findIndex(item);
+                        console.log(index);
+                        if(index === undefined){
+                            console.log("item doesnt exist");
+                        }else{
+                            cart[index].quantity+=1;
+                        }                       
+                                         
+                        this.setState({
+                            cart                            
+                        });
+                    },
+
+                    decQuantity: (item) => {                        
+                        let cart = this.state.cart; 
+                        let index = this.findIndex(item);
+                        console.log(index);
+                        if(index === undefined){
+                            console.log("item doesnt exist");     
+                            
+                        }else{
+                            cart[index].quantity == 1 ? delete cart[index] : cart[index].quantity-=1;
+                        }                       
+                                         
+                        this.setState({
+                            cart                            
                         });
                     },
                     
