@@ -4,24 +4,37 @@ import { FaMinus, FaPlus } from "react-icons/fa";
 
 export default class Cart extends Component {
     static contextType = DataContext;
-
+  constructor(props){
+    super(props);
+  }
     
   render() {     
     const cart = Object.values(this.context.cart);
-    const brandStyle={
-        fontSize:'30px', 
-        lineHeight:'27px',
-      };
+    
+      let modalHeader, brandFontWeight, brandStyle, itemStyle ='';
+
+      if(this.props.modal===true){
+        modalHeader={fontSize:'15px',};
+        brandFontWeight={ fontWeight:'200' };
+        brandStyle={fontSize:'15px',lineHeight:'27px',};
+        itemStyle ={fontWeight:'bold', fontSize:'15px', lineHeight:'18px'};
+      }else{
+        modalHeader={fontSize:'30px',};
+        brandFontWeight={ fontWeight:'600' };
+        brandStyle={fontSize:'30px', lineHeight:'27px',};
+        itemStyle ={fontWeight:'bold', fontSize:'24px', lineHeight:'18px'};
+      }
+   
 
     return ( <div style={{ marginTop:'100px', marginLeft:'100px', marginRight:'100px'}}>
-        <h1 style={{textTransform:'uppercase'}}>cart</h1>
+        <h1 style={{textTransform:'uppercase', ...modalHeader}}>cart</h1>
         <div style={{ display:'flex', flexDirection:'column'}}>
             {cart.map((element) => (
                   <div style={{ display:'flex', justifyContent:'space-between'}}>
                     <div>
-                      <p style={{ ...brandStyle, fontWeight:'600' }}>{element.item.brand}</p>
+                      <p style={{ ...brandStyle, ...brandFontWeight }}>{element.item.brand}</p>
                       <p style={{ ...brandStyle, fontWeight:'normal' }}>{element.item.name}</p>
-                      <p style={{fontWeight:'bold', fontSize:'24px', lineHeight:'18px'}}>{ `${element.item.prices.find( (x) => x.currency.symbol == this.context.currencyLabel).amount} ${this.context.currencyLabel} `}</p>
+                      <p style={itemStyle}>{ `${element.item.prices.find( (x) => x.currency.symbol == this.context.currencyLabel).amount} ${this.context.currencyLabel} `}</p>
                       {/* { Object.keys(item.att).length === 0 ? <p>no att</p> : <p>yes att</p>} */}
                       { Object.keys(element.item.att).map((key) => (
                         <div style={{ display:'flex'}}>
@@ -45,3 +58,8 @@ export default class Cart extends Component {
     </div>);
   }
 }
+
+
+Cart.defaultProps = {
+  modal:false
+};
