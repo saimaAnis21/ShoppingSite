@@ -110,9 +110,9 @@ class ProdDesc extends Component {
             <div>{ prodData.attributes.length > 0 ? prodData.attributes.map((att) => (
               <>
               <p>{att.name}</p>
-              <div onChange={(e) => this.addAttributes(e)}>
+              <div>
                { att.name == "Color" ? att.items.map( item => 
-                <div style={{ color:`${item.value}`, backgroundColor:`${item.value}`, ...attStyle}}> <input type="radio" checked={this.state.cartItem.att[att.name]=== item.value} value={item.value} name={att.name} />{item.displayValue}</div>) : att.items.map( item => <div style={ attStyle }><input type="radio" checked={this.state.cartItem.att[att.name]=== item.value} value={item.value} name={att.name} />{item.displayValue}</div> ) }
+                <div style={{ color:`${item.value}`, backgroundColor:`${item.value}`, ...attStyle}}> <input type="radio" onChange={(e) => this.addAttributes(e)} checked={this.state.cartItem.att[att.name]=== item.value} value={item.value} name={att.name} />{item.displayValue}</div>) : att.items.map( item => <div style={ attStyle }><input type="radio" onChange={(e) => this.addAttributes(e)} checked={this.state.cartItem.att[att.name]=== item.value} value={item.value} name={att.name} />{item.displayValue}</div> ) }
                 </div>
               </>)) : <p></p>}              
             </div>

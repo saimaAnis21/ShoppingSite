@@ -51,12 +51,10 @@ export default class Products extends Component {
                 {prod_list.map((prod) => (
                         
                     <Link to={`/product/${prod.id}`}>   
-                        <div key={Math.random()} >
+                        <div>
                             <div style={{textAlign:'center'}}><img src={prod.gallery[0]} style={{ width:'auto', height:'100px'}}></img></div>
-                            <ul style={{ listStyle:'none'}}>                      
-                            <li>{prod.name}</li>
-                            <li>{ `${prod.prices.find( (x) => x.currency.symbol == this.context.currencyLabel).amount} ${this.context.currencyLabel} `}</li>                      
-                            </ul>
+                            <div>{prod.name}</li>
+                            <li key={Math.random()}>{ `${prod.prices.find( (x) => x.currency.symbol == this.context.currencyLabel).amount} ${this.context.currencyLabel} `}</li>                      
                         </div>     
                     </Link>         
                 ))}
