@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { fetchData } from '../logic/apiData';
 import DataContext from '../DataContext';
-import { PROD_LIST_QUERY } from '../queries';
 
-export default class Products extends Component {
+
+
+class Products extends Component {
 
     static contextType = DataContext;
 
@@ -13,15 +14,16 @@ export default class Products extends Component {
           
         this.state = {
           products:[], 
-          priceLabel:"",                
+          priceLabel:"",
+          flag: false,          
         };
       
     }   
-    getProd = async() =>{
+    getProd = async(cat) =>{
         this._isMount = true;        
         let products =[];
         const priceLabel = this.context.currencyLabel;
-        const data = await fetchData(PROD_LIST_QUERY);
+        const data = await fetchData(cat);
         products = await data.data.category.products;
         this.setState({products, priceLabel});
         
@@ -29,32 +31,55 @@ export default class Products extends Component {
 
     componentDidMount(){   
         this._isMounted = true;
+        let { cat } = this.props.params;                                     
+        if(cat === undefined)  {
+            cat = "all";
+        }
         ( async () => {
-            this.getProd();
-          })();            
-        
+            this.getProd(cat);
+          })(); 
+        console.log("mounted products");
+                   
     }
-   
 
-    render() {       
-        let prod_list = [];        
-        if(this._isMounted){
-            if (this.context.category == 'all' || this.context.category == "") {
+    componentDidUpdate(prevProps){
+        if(prevProps.params !== this.props.params){
+            let { cat } = this.props.params;                                     
+            if(cat === undefined)  {
+                cat = "all";
+            }
+            ( async () => {
+                this.getProd(cat);
+              })(); 
+            console.log("update");
+        }
+    }
+    
+
+    componentWillUnmount(){
+        console.log("umnounted products");
+      
+    }
+
+       render() {       
+        let prod_list = [];
+        let prodStyle={ fontSize:'18px', lineHeight:'160%', color:'#1D1F22'};
+        
+        if(this._isMounted){           
+            
                 prod_list = this.state.products;
-            }else{
-                prod_list = this.state.products.filter( prod => prod.category == this.context.category);
-                }                
+                           
             return (        
                 <div>
                 <h1>{this.context.category}</h1>  
                 <div style={{ display:'flex', flexWrap:'wrap', border:'5px solid blue', justifyContent:'space-around'}}>
                 {prod_list.map((prod) => (
                         
-                    <Link to={`/product/${prod.id}`}>   
-                        <div>
+                    <Link to={`/product/${prod.id}`} key={prod.id}>   
+                        <div style={{ display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'space-between', margin:'20px 20px'}}>
                             <div style={{textAlign:'center'}}><img src={prod.gallery[0]} style={{ width:'auto', height:'100px'}}></img></div>
-                            <div>{prod.name}</li>
-                            <li key={Math.random()}>{ `${prod.prices.find( (x) => x.currency.symbol == this.context.currencyLabel).amount} ${this.context.currencyLabel} `}</li>                      
+                            <div style={{ fontWeight:'300', ...prodStyle}}>{prod.name}</div>
+                            <div style={{ fontWeight:'500', ...prodStyle}}>{ `${prod.prices.find( (x) => x.currency.symbol == this.context.currencyLabel).amount} ${this.context.currencyLabel} `}</div>                      
                         </div>     
                     </Link>         
                 ))}
@@ -69,3 +94,11 @@ export default class Products extends Component {
         
     
 }
+
+
+export default (props) => (
+    <Products
+        {...props}
+        params={useParams()}
+    />
+  );

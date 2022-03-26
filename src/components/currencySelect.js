@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { fetchData } from '../logic/apiData';
+import { fetchCurrency } from '../logic/apiData';
 import DataContext from '../DataContext';
-import { CURRENCY_LIST } from '../queries';
+
 
 export default class CurrencySelect extends Component {
 
@@ -16,7 +16,7 @@ export default class CurrencySelect extends Component {
 
     componentDidMount(){    
       ( async () => {
-          const x = await fetchData(CURRENCY_LIST);
+          const x = await fetchCurrency();
           this.setState({
             currencySymbols: x.data.currencies
           });

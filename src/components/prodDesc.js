@@ -49,10 +49,10 @@ class ProdDesc extends Component {
 } 
 
   componentDidMount(){
-    let { data } = this.props.params;
+    let { id } = this.props.params;
     this._isMounted = true;
         ( async () => {
-            this.getProd(data);
+            this.getProd(id);
           })(); 
   }
 
@@ -79,7 +79,6 @@ class ProdDesc extends Component {
     const { prodData, bigImgSrc } = this.state;
 
     const attStyle ={
-      marginRight:'10px',
       textAlign:'center',
       display:'inline-block',
       border:'2px solid black'
@@ -93,34 +92,36 @@ class ProdDesc extends Component {
     if(this._isMounted){
       
       return(
-        <div style={{ border:'5px solid red', marginTop:'100px', display:'flex'}}>
+        <div style={{ border:'5px solid red', marginTop:'100px', display:'flex', justifyContent:'space-around'}}>
 
-          <div style={{ display:'flex', flexDirection:'column'}}>{ prodData.gallery.map( (pic) => (
-           <a onClick={() => this.setState({ bigImgSrc:pic })}><img src={pic} style={{ width:'auto', height:'100px'}}></img></a>
+          <div style={{ display:'flex', flexDirection:'column', flexWrap:'wrap', height:'600px'}}>{ prodData.gallery.map( (pic) => (
+           <a  style={{margin:'20px 20px'}} key={Math.random()} onClick={() => this.setState({ bigImgSrc:pic })}><img src={pic} style={{ width:'auto', height:'100px'}}></img></a>
           ))}
           </div>
 
-          <div><img src={bigImgSrc} style={{ width:'auto', height:'600px'}}></img></div>
+          <div><img src={bigImgSrc} style={{ width:'auto', height:'600px', maxWidth:'400px'}}></img></div>
 
-          <div>
+          <div style={{ display:'flex', flexDirection:'column', justifyContent:'space-around' }}>
             <div style={ {fontWeight:'600', ...brandnameStyle } }>{prodData.brand}</div>
 
             <div style={{ fontWeight:'normal', ...brandnameStyle }}>{prodData.name}</div>
 
             <div>{ prodData.attributes.length > 0 ? prodData.attributes.map((att) => (
               <>
-              <p>{att.name}</p>
-              <div>
+              <div key={Math.random()}>{att.name}</div>
+              <div key={att.id} style={{display:'flex', justifyContent:'space-evenly'}}>
                { att.name == "Color" ? att.items.map( item => 
-                <div style={{ color:`${item.value}`, backgroundColor:`${item.value}`, ...attStyle}}> <input type="radio" onChange={(e) => this.addAttributes(e)} checked={this.state.cartItem.att[att.name]=== item.value} value={item.value} name={att.name} />{item.displayValue}</div>) : att.items.map( item => <div style={ attStyle }><input type="radio" onChange={(e) => this.addAttributes(e)} checked={this.state.cartItem.att[att.name]=== item.value} value={item.value} name={att.name} />{item.displayValue}</div> ) }
+                <div key={Math.random()} style={{ color:`${item.value}`, backgroundColor:`${item.value}`, ...attStyle}}> <input key={Math.random()} type="radio" onChange={(e) => this.addAttributes(e)} checked={this.state.cartItem.att[att.name]=== item.value} value={item.value} name={att.name} />{item.displayValue}</div>) : att.items.map( item => <div key={Math.random()} style={ attStyle }><input key={Math.random()} type="radio" onChange={(e) => this.addAttributes(e)} checked={this.state.cartItem.att[att.name]=== item.value} value={item.value} name={att.name} />{item.displayValue}</div> ) }
                 </div>
-              </>)) : <p></p>}              
+              </>)) : <p key={Math.random()} ></p>}              
             </div>
 
-            <div style={{ fontWeight:'bold', fontSize:'18px', color:'#1D1F22', textTransform:'uppercase'}}>price:</div>
-            <div>{ `${prodData.prices.find( (x) => x.currency.symbol == this.context.currencyLabel).amount} ${this.context.currencyLabel} `}</div>
+            <div style={{ fontWeight:'bold', fontSize:'18px', color:'#1D1F22', textTransform:'uppercase'}}>price:
+            <div style={{ margin:'10px 0px'}}>{ `${this.context.currencyLabel}${prodData.prices.find( (x) => x.currency.symbol == this.context.currencyLabel).amount} `}</div>
+            </div>
+            
 
-            <button onClick={() => this.context.addToCart(this.state.cartItem)} style={{ textTransform:'uppercase', backgroundColor:'#5ECE7B', border:'2px solid #5ECE7B' }}>Add to cart</button>
+            <button onClick={() => this.context.addToCart(this.state.cartItem)} style={{ cursor:'pointer', textTransform:'uppercase', backgroundColor:'#5ECE7B', border:'2px solid #5ECE7B' }}>Add to cart</button>
            
             <div><Markup content={prodData.description} /></div>
 

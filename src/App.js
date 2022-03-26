@@ -6,6 +6,7 @@ import DataProvider from './DataProvider';
 import ProdDesc from './components/prodDesc';
 import Cart from './components/cart';
 
+
 export default class App extends Component {
 
   render() {
@@ -13,10 +14,11 @@ export default class App extends Component {
       <BrowserRouter>
       <DataProvider>
         <div style={{ padding:'5px', border:'5px solid yellow', position:'absolute', width:'100%', height:'1513 px', left:'0px', top:'0 px', backgroundColor:'#FFFFFF'}}>
-        <NavBar />  
+        <NavBar /> 
             <Routes>
               <Route exact path="/" element={<Products />} />
-              <Route exact path="/product/:data" element={<ProdDesc/>} />  
+              <Route exact path="/product/:id" element={<ProdDesc/>} /> 
+              <Route exact path="/products/:cat" element={<Products/>} />  
               <Route exact path="/cart" element={<Cart/>} />            
             </Routes>                  
         </div>
