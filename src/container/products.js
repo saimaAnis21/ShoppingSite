@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { fetchData } from '../logic/apiData';
 import DataContext from '../DataContext';
-
+import CurrencyDisplay from '../components/currencyDisplay';
 
 
 class Products extends Component {
@@ -79,7 +79,7 @@ class Products extends Component {
                         <div style={{ display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'space-between', margin:'20px 20px'}}>
                             <div style={{textAlign:'center'}}><img src={prod.gallery[0]} style={{ width:'auto', height:'100px'}}></img></div>
                             <div style={{ fontWeight:'300', ...prodStyle}}>{prod.name}</div>
-                            <div style={{ fontWeight:'500', ...prodStyle}}>{ `${prod.prices.find( (x) => x.currency.symbol == this.context.currencyLabel).amount} ${this.context.currencyLabel} `}</div>                      
+                            <div style={{ fontWeight:'500', ...prodStyle}}><CurrencyDisplay data = {prod} /></div>                      
                         </div>     
                     </Link>         
                 ))}

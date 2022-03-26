@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import DataContext from '../DataContext';
 import { FaMinus, FaPlus } from "react-icons/fa";
+import CurrencyDisplay from './currencyDisplay';
 
 export default class Cart extends Component {
     static contextType = DataContext;
@@ -34,8 +35,8 @@ export default class Cart extends Component {
                     <div>
                       <p style={{ ...brandStyle, ...brandFontWeight }}>{element.item.brand}</p>
                       <p style={{ ...brandStyle, fontWeight:'normal' }}>{element.item.name}</p>
-                      <p style={itemStyle}>{ `${element.item.prices.find( (x) => x.currency.symbol == this.context.currencyLabel).amount} ${this.context.currencyLabel} `}</p>
-                      {/* { Object.keys(item.att).length === 0 ? <p>no att</p> : <p>yes att</p>} */}
+                      <p style={itemStyle}><CurrencyDisplay data = {element.item}/></p>
+                      
                       { Object.keys(element.item.att).map((key) => (
                         <div key={Math.random()} style={{ display:'flex'}}>
                           <div>{key}</div>

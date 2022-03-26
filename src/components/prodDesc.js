@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { fetchProdDesc } from '../logic/apiData';
 import { Markup } from 'interweave';
 import DataContext from '../DataContext';
+import CurrencyDisplay from './currencyDisplay';
 
 class ProdDesc extends Component {
 
@@ -117,7 +118,7 @@ class ProdDesc extends Component {
             </div>
 
             <div style={{ fontWeight:'bold', fontSize:'18px', color:'#1D1F22', textTransform:'uppercase'}}>price:
-            <div style={{ margin:'10px 0px'}}>{ `${this.context.currencyLabel}${prodData.prices.find( (x) => x.currency.symbol == this.context.currencyLabel).amount} `}</div>
+            <CurrencyDisplay data={prodData} />
             </div>
             
 
