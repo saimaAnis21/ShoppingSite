@@ -29,7 +29,7 @@ export default class NavBar extends Component {
 
     render() {
         return (
-            <div style={{ display:'flex', justifyContent:'space-around', border:'5px solid green', position:'absolute', left:'0%', right:'0%', top:'0%', bottom:'0%', width:'1440 px', height:'80px', backgroundColor:'#FFFFFF'}}>
+            <div style={{ display:'flex', justifyContent:'space-around',  position:'absolute', left:'0%', right:'0%', top:'0%', bottom:'0%', width:'1440 px', height:'80px', backgroundColor:'#FFFFFF'}}>
                 <CatLinks />
                 <GiShoppingBag style={{ height:'25px', width:'auto'}} />
                 <CurrencySelect />                

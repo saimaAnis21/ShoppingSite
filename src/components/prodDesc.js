@@ -81,7 +81,7 @@ class ProdDesc extends Component {
     const attStyle ={
       textAlign:'center',
       display:'inline-block',
-      border:'2px solid black'
+      border:'2px solid '
     };
 
     const brandnameStyle={
@@ -92,10 +92,10 @@ class ProdDesc extends Component {
     if(this._isMounted){
       
       return(
-        <div style={{ border:'5px solid red', marginTop:'100px', display:'flex', justifyContent:'space-around'}}>
+        <div style={{ marginTop:'100px', display:'flex', justifyContent:'space-around'}}>
 
           <div style={{ display:'flex', flexDirection:'column', flexWrap:'wrap', height:'600px'}}>{ prodData.gallery.map( (pic) => (
-           <a  style={{margin:'20px 20px'}} key={Math.random()} onClick={() => this.setState({ bigImgSrc:pic })}><img src={pic} style={{ width:'auto', height:'100px'}}></img></a>
+           <a  style={{margin:'20px 20px'}} key={Math.random()} onClick={() => this.setState({ bigImgSrc:pic })}><img src={pic} style={{ width:'auto', height:'100px', cursor:'pointer'}}></img></a>
           ))}
           </div>
 

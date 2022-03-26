@@ -72,7 +72,7 @@ class Products extends Component {
             return (        
                 <div>
                 <h1>{this.context.category}</h1>  
-                <div style={{ display:'flex', flexWrap:'wrap', border:'5px solid blue', justifyContent:'space-around'}}>
+                <div style={{ display:'flex', flexWrap:'wrap', justifyContent:'space-around'}}>
                 {prod_list.map((prod) => (
                         
                     <Link to={`/product/${prod.id}`} key={prod.id}>   
